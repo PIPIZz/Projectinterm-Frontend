@@ -2,32 +2,32 @@
   <div class="row">
     <div class="col-8">
       <div>
-        <nav aria-label="breadcrumb" >
+        <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item "><router-link :to="`/user/home`" class="link-light">Home</router-link></li>
+            <li class="breadcrumb-item "><router-link :to="`/user/home`" class="link-dark">Home</router-link></li>
             <li class="breadcrumb-item active" aria-current="page">Post</li>
           </ol>
         </nav>
       </div>
-      <div id="viewer"></div>
+      <div id="viewer" class="pb-4"></div>
     </div>
     <div class="col-4">
       <div class="p-2">
-        <ol class="list-group" >
-          <li class="list-group-item d-flex justify-content-between align-items-start"  style="background-color: #F8F4EA;">
+        <ol class="list-group border-dark" >
+          <li class="list-group-item d-flex justify-content-between align-items-start border-dark"  style="background-color: #;">
             <div class="ms-2 me-auto text-capitalize">
               <div class="fw-bold ">Author</div>
               <i class="bi-person"></i> {{ author }}
             </div>
           </li>
-          <li class="list-group-item d-flex justify-content-between align-items-start" style="background-color: #F8F4EA;" >
+          <li class="list-group-item d-flex justify-content-between align-items-start border-dark" style="background-color: #;" >
             <div class="ms-2 me-auto text-capitalize">
               <div class="fw-bold">Catagory</div>
               <!-- <i class="bi-book "></i>  {{ catagory_name }} -->
-              <a  :href="`/user/catagory/${catagory_id}`" class="nav-link px-2 link-dark" ><i class="bi-book"></i> {{ catagory_name }}</a >
+              <a  :href="`/user/catagory/${catagory_id}`" class="nav-link px-2 link-dark " ><i class="bi-book"></i> {{ catagory_name }}</a >
             </div>
           </li>
-          <li class="list-group-item d-flex justify-content-between align-items-start" style="background-color: #F8F4EA;" >
+          <li class="list-group-item d-flex justify-content-between align-items-start border-dark" style="background-color: #;" >
             <div class="ms-2 me-auto text-capitalize">
               <div class="fw-bold">Tags</div>
               <div v-for="tag in tags" :key="tag._id">
@@ -39,12 +39,12 @@
       </div>
       <div class="p-2">
         <div class="pb-2">
-          <div class="card" style="background-color: #EEF1FF;">
+          <div class="card border-dark" style="background-color: #EEF1FF;">
             <div class="card-body">
               <h5 class="card-title">Comments</h5>
 
               <div class="row p-2"  v-for="comments , index in (showLess ? Comments : Comments.slice(0, 5))" :key="index">
-                <div class="inline-flex text-start p-2 badge text-wrap text-dark" style="background-color: #D2DAFF" >
+                <div class="inline-flex text-start p-2 badge text-wrap text-dark " style="background-color: #D2DAFF " >
                     <div v-if="comment_idEdit == comments._id" >
                       <form  class="p-2" >
                         <div class="form-floating">
@@ -58,12 +58,12 @@
                     </div> 
                     
                     <div v-else>
-                      <div >
+                      <div class="">
                         <p class="fw-bold h5 text-capitalize"><i class="bi-person-bounding-box p-2" style="font-size: 2rem; color: cornflowerblue;"></i> {{ comments.author_name }} </p>
                         <p class="fw-normal p-2 h6" >{{ comments.text }}</p> 
                           <div class="row justify-content-md-end" v-if="comments.author_id == this.author_id">
-                            <div  class="col-auto link-success"  role="button" @click.prevent="OnClickEdit(comments._id)">แก้ไข </div> 
-                            <div  class="col-auto link-danger" role="button" @click="OncommentsDelete(comments._id)">ลบ</div>
+                            <div  class="col-auto link-success"  role="button" @click.prevent="OnClickEdit(comments._id)">Edit </div> 
+                            <div  class="col-auto link-danger" role="button" @click="OncommentsDelete(comments._id)">Delete</div>
                           </div>
                       </div>
                     </div>      
@@ -75,12 +75,12 @@
                 </div>
             </div>
             <form @submit.prevent="OnComment" class="p-2" >
-              <div class="form-floating">
-                <textarea class="form-control" placeholder="Comment here" id="floatingTextarea" style="height: 100px" v-model="comment"></textarea>
+              <div class="form-floating ">
+                <textarea class="form-control border-dark" placeholder="Comment here" id="floatingTextarea" style="height: 100px" v-model="comment"></textarea>
                 <label for="floatingTextarea">Comments here!!</label>
               </div> 
                 <div class="row justify-content-md-end p-2" >
-                    <button  class="col-auto btn btn-outline-success"   role="button" >ส่ง </button> 
+                    <button  class="col-auto btn btn-outline-success"   role="button" >send</button> 
                 </div>
             </form>
           </div>
@@ -135,10 +135,7 @@ export default {
           this.catagory_id = res.data.catagory._id;
           this.viewer = new   Viewer({
             el: document.querySelector("#viewer")!,
-        
-            initialValue: res.data.content, 
-            theme: 'dark',
-                
+            initialValue: res.data.content,
           });
           
         })
@@ -164,27 +161,28 @@ export default {
     OnComment(){
       console.log('OnComment Working');   
       var text = this.comment;
-      var author = JSON.parse(localStorage.getItem("profile") || "");
-      var author_id = author.id;
-      const post_id = this.$route.params.id;
-      
-      let apiUrl = "http://localhost:4040/api/comments/create";
-      axios.post(apiUrl,{text,author_id})
-      .then((res) => {
-        let comment_id = res.data.id;
-        console.log(comment_id);
-        console.log(res.data);
-        axios.put("http://localhost:4040/api/post/addcomments",{post_id,comment_id})
-        .then((res) =>{
+      if(text){     
+        var author = JSON.parse(localStorage.getItem("profile") || "");
+        var author_id = author.id;
+        const post_id = this.$route.params.id;
+        
+        let apiUrl = "http://localhost:4040/api/comments/create";
+        axios.post(apiUrl,{text,author_id})
+        .then((res) => {
+          let comment_id = res.data.id;
+          console.log(comment_id);
           console.log(res.data);
-          this.getComment();
+          axios.put("http://localhost:4040/api/post/addcomments",{post_id,comment_id})
+          .then((res) =>{
+            console.log(res.data);
+            this.getComment();
+          })
         })
-      })
-      .catch((err) =>{
-        console.log(err.response.data.message);
-        alert(err.response.data.message);
-      })
-
+        .catch((err) =>{
+          console.log(err.response.data.message);
+          alert(err.response.data.message);
+        })
+      }
 
     },
     OncommentsDelete(id : string){

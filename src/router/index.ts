@@ -1,20 +1,43 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
+import RegisterComponent from '../components/RegisterPage.vue'
+import LoginComponent from '../components/LoginPage.vue'
+import Test from '../components/TestViewer.vue'
+import HomePageUser from '../components/user/HomePage.vue'
+import axios from 'axios'
+import AddPost  from '../components/user/Post/AddPost.vue'
+import EditPost  from '../components/user/Post/EditPost.vue'
+import Post  from '../components/user/Post/PostPage.vue'
+import DetailPost  from '../components/user/DetailPost.vue'
+import PostBycat  from '../components/user/PostBycatagory.vue'
+import PageSerach from '../components/user/Search/PageSearch.vue'
+import HomeSeach from '../components/user/Search/HomeSeach.vue'
 const routes: Array<RouteRecordRaw> = [
+  
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/register',
+    name: 'register',
+    component: RegisterComponent
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/',
+    name: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: '/user',
+    name: 'user.home',
+    component:() => import(/* webpackChunkName: "about" */ '../components/user/LayoutHomePage.vue'),
+    children:[
+      {path:'home', component:HomePageUser},
+      {path:'addpost', component: AddPost},
+      {path:'editpost/:id', name : 'editpost', component: EditPost},
+      {path:'post', component:Post},
+      {path:'detail/:id', component:DetailPost},
+      {path:'catagory/:id', component: PostBycat},
+      {path:'search/:id', component:PageSerach}
+    ]
   }
+  
 ]
 
 const router = createRouter({
@@ -22,4 +45,29 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to,from,next) => {
+  console.log('page change')
+  const publicPages = ['/','/register'];
+  const authRequired = !publicPages.includes(to.path);
+
+  if(authRequired){
+    axios.get('http://localhost:4040/api/profile/vertify',{
+      headers: {
+        Authorization: "Bearer "+localStorage.getItem("access_token"),
+      },
+    }).then(()=>{ 
+      next();  
+    }).catch((error : any)=>{
+      console.log(error.response.data);
+      localStorage.removeItem("access_token")
+      next({ name: 'login' });
+    })
+  }else{
+    if(to.path == '/user' && localStorage.getItem("access_token") != null){
+      next({name : 'user.home'}); 
+    }
+   next();
+  }
+
+})
 export default router
