@@ -51,7 +51,7 @@ router.beforeEach((to,from,next) => {
   const authRequired = !publicPages.includes(to.path);
 
   if(authRequired){
-    axios.get('http://localhost:4040/api/profile/vertify',{
+    axios.get('https://interm-api.onrender.com/api/profile/vertify',{
       headers: {
         Authorization: "Bearer "+localStorage.getItem("access_token"),
       },

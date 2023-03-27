@@ -94,7 +94,7 @@ export default {
     methods: {
     async getallPost() {
       var id = this.$route.params.id
-      let apiUrl = "http://localhost:4040/api/post/getbyTags/";
+      let apiUrl = "https://interm-api.onrender.com/api/post/getbyTags/";
       await axios
         .get(apiUrl+id)
         .then((res) => {
@@ -106,7 +106,7 @@ export default {
         });
     },
     async getTags() {     
-      let apiUrl = "http://localhost:4040/api/tags/tag";
+      let apiUrl = "https://interm-api.onrender.com/api/tags/tag";
       await axios
         .get(apiUrl, {
           headers: {
@@ -129,7 +129,7 @@ export default {
         });
     },
     async getallTags() {
-      let apiUrl = "http://localhost:4040/api/tags/getall";
+      let apiUrl = "https://interm-api.onrender.com/api/tags/getall";
       await axios
         .get(apiUrl, {
           headers: {

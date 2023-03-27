@@ -50,7 +50,7 @@ export default {
   }),
   methods :{
    async handleTagCreate(option : any){
-      let apiUrl = "http://localhost:4040/api/tags/create";
+      let apiUrl = "https://interm-api.onrender.com/api/tags/create";
      var new_tag : any = await axios.post(apiUrl,{name : option.value})
       .then((res)=>{
         return res.data
@@ -62,7 +62,7 @@ export default {
       return option 
     },
     getAllTags(){
-      let apiUrl = "http://localhost:4040/api/tags/getall";
+      let apiUrl = "https://interm-api.onrender.com/api/tags/getall";
       axios.get(apiUrl, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("access_token"),

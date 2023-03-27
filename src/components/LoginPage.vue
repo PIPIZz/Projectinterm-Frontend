@@ -52,7 +52,7 @@ export default defineComponent({
   methods: {
     async onclickLogin() {
       this.$store.commit("UPDATE_LOADING", true);
-      let apiUrl = "http://localhost:4040/api/profile/login";
+      let apiUrl = "https://interm-api.onrender.com/api/profile/login";
       await axios
         .post(apiUrl, this.states)
         .then((response) => {
@@ -79,7 +79,7 @@ export default defineComponent({
           const email = result.user.email;
           const provider_id = result.user.uid;
 
-          let apiUrl = "http://localhost:4040/api/profile/loginwithgoogle";
+          let apiUrl = "https://interm-api.onrender.com/api/profile/loginwithgoogle";
             await axios.post(apiUrl,{email,provider_id})
               .then((response) => {
               let profile = response.data.userInfo;

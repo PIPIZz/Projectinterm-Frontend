@@ -48,7 +48,7 @@ export default defineComponent({
       plugins: [colorSyntax, codeSyntaxHighlight],
     });
 
-    axios.get("http://localhost:4040/api/catagory/getall").then((response) => {
+    axios.get("https://interm-api.onrender.com/api/catagory/getall").then((response) => {
       console.log(response.data);
       this.info = response.data;
     });

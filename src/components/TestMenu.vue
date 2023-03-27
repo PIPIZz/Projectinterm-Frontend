@@ -30,7 +30,7 @@ export default {
   methods: {
     async getPostbycat() {
       let apiUrl =
-        "http://localhost:4040/api/post/getbycatagory/63eb45eb318da58c0e924ac8";
+        "https://interm-api.onrender.com/api/post/getbycatagory/63eb45eb318da58c0e924ac8";
       await axios
         .get(apiUrl)
         .then((res) => {

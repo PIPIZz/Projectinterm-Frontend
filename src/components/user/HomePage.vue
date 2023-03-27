@@ -79,7 +79,7 @@ export default defineComponent({
   methods: {
     async getallPost() {
       this.$store.commit('UPDATE_LOADING',true)
-      let apiUrl = "http://localhost:4040/api/post/getall";
+      let apiUrl = "https://interm-api.onrender.com/api/post/getall";
       await axios
         .get(apiUrl)
         .then((res) => {
@@ -95,7 +95,7 @@ export default defineComponent({
         })
     },
     async getTags() {
-      let apiUrl = "http://localhost:4040/api/tags/tag";
+      let apiUrl = "https://interm-api.onrender.com/api/tags/tag";
       await axios
         .get(apiUrl, {
           headers: {
@@ -110,7 +110,7 @@ export default defineComponent({
         });
     },
     async getallTags() {
-      let apiUrl = "http://localhost:4040/api/tags/getall";
+      let apiUrl = "https://interm-api.onrender.com/api/tags/getall";
       await axios
         .get(apiUrl, {
           headers: {

@@ -123,7 +123,7 @@ export default {
    async getPost(){
       var id = this.$route.params.id;
       // var id = "1111111111111111"
-      let apiUrl = "http://localhost:4040/api/post/getdetail/";
+      let apiUrl = "https://interm-api.onrender.com/api/post/getdetail/";
       await axios
         .get(apiUrl + id)
         .then((res) => {
@@ -146,7 +146,7 @@ export default {
     },
     async getComment(){
       var post_id = this.$route.params.id;
-      let apiUrl = "http://localhost:4040/api/post/getcommentbyid";
+      let apiUrl = "https://interm-api.onrender.com/api/post/getcommentbyid";
      await  axios.post(apiUrl,{post_id})
       .then((res) => {
           this.comment ="";
@@ -166,13 +166,13 @@ export default {
         var author_id = author.id;
         const post_id = this.$route.params.id;
         
-        let apiUrl = "http://localhost:4040/api/comments/create";
+        let apiUrl = "https://interm-api.onrender.com/api/comments/create";
         axios.post(apiUrl,{text,author_id})
         .then((res) => {
           let comment_id = res.data.id;
           console.log(comment_id);
           console.log(res.data);
-          axios.put("http://localhost:4040/api/post/addcomments",{post_id,comment_id})
+          axios.put("https://interm-api.onrender.com/api/post/addcomments",{post_id,comment_id})
           .then((res) =>{
             console.log(res.data);
             this.getComment();
@@ -187,14 +187,14 @@ export default {
     },
     OncommentsDelete(id : string){
       var comment_id = id;  
-      let apiUrl ="http://localhost:4040/api/comments/delete/"
+      let apiUrl ="https://interm-api.onrender.com/api/comments/delete/"
       axios.delete(apiUrl+comment_id)
       .then((res) =>{
         console.log(res); 
         const post_id = this.$route.params.id;
         const requestConfig: AxiosRequestConfig = {};
         requestConfig.data = { post_id: post_id,comment_id:comment_id };
-        let apiUrl ="http://localhost:4040/api/post/deletecomment"
+        let apiUrl ="https://interm-api.onrender.com/api/post/deletecomment"
         axios.delete(apiUrl,requestConfig)
         .then((res) =>{
           this.getComment();
@@ -223,7 +223,7 @@ export default {
     },
     OncliclSaveEdit(text : string,id :string){
       console.log(text);
-      let apiUrl = "http://localhost:4040/api/comments/update"
+      let apiUrl = "https://interm-api.onrender.com/api/comments/update"
       axios.put(apiUrl,{id,text})
       .then((res) =>{
         this.getComment();

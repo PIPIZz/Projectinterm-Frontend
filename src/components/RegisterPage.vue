@@ -67,7 +67,7 @@ export default defineComponent({
         password : this.password,
         role:"user"
       }
-      let apiUrl = "http://localhost:4040/api/profile/create";
+      let apiUrl = "https://interm-api.onrender.com/api/profile/create";
       await axios
         .post(apiUrl,data )
         .then((response) => {

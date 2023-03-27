@@ -46,7 +46,7 @@ export default {
        async getPostbycat(){
         this.$store.commit('UPDATE_LOADING',true);
             var catagory = this.$route.params.id;
-            let apiUrl = "http://localhost:4040/api/post/getbycatagory/"
+            let apiUrl = "https://interm-api.onrender.com/api/post/getbycatagory/"
            await axios.get(apiUrl+catagory)
             .then((res) =>{
               //  console.log(res.data);

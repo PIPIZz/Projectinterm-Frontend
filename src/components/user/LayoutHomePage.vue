@@ -163,7 +163,7 @@ export default {
   },
   methods: {
     getAllCatagory() {
-      let apiUrl = "http://localhost:4040/api/catagory/getall";
+      let apiUrl = "https://interm-api.onrender.com/api/catagory/getall";
       axios
         .get(apiUrl)
         .then((res) => {
@@ -180,7 +180,7 @@ export default {
       return router.push({ path: "/login" });
     },
     async getallTags() {
-      let apiUrl = "http://localhost:4040/api/tags/getall";
+      let apiUrl = "https://interm-api.onrender.com/api/tags/getall";
       await axios
         .get(apiUrl, {
           headers: {
@@ -195,7 +195,7 @@ export default {
         });
     },
     async getallPost() {
-      let apiUrl = "http://localhost:4040/api/post/getall";
+      let apiUrl = "https://interm-api.onrender.com/api/post/getall";
       await axios
         .get(apiUrl)
         .then((res) => {

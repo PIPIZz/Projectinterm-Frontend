@@ -53,7 +53,7 @@ export default {
       async  getAllPost(){
             this.$store.commit('UPDATE_LOADING',true);
             var profiles = JSON.parse(localStorage.getItem("profile") || "");
-            let apiUrl = 'http://localhost:4040/api/post/getallbyid/';
+            let apiUrl = 'https://interm-api.onrender.com/api/post/getallbyid/';
            await axios.get(apiUrl+profiles.id)
             .then((res) => {
                 this.allPost = res.data
@@ -76,7 +76,7 @@ export default {
             }
         },
         onclickDelete(id : string){
-          let apiUrl = 'http://localhost:4040/api/post/delete/';
+          let apiUrl = 'https://interm-api.onrender.com/api/post/delete/';
             axios.delete(apiUrl+id)
             .then((res) => {
                 alert("Delete Success")

@@ -144,7 +144,7 @@ export default defineComponent({
         tags: this.value,
         author: profiles.id,
       };
-      let apiUrl = "http://localhost:4040/api/post/create";
+      let apiUrl = "https://interm-api.onrender.com/api/post/create";
       axios
         .post(apiUrl, data)
         .then((res) => {
@@ -156,7 +156,7 @@ export default defineComponent({
         });
     },
     async handleTagCreate(option: any) {
-      let apiUrl = "http://localhost:4040/api/tags/create";
+      let apiUrl = "https://interm-api.onrender.com/api/tags/create";
       var new_tag: any = await axios
         .post(apiUrl, { name: option.value })
         .then((res) => {
@@ -171,7 +171,7 @@ export default defineComponent({
     async handleCatagoryCreate(option: any) {
       console.log(option);
       
-      let apiUrl = "http://localhost:4040/api/catagory/create";
+      let apiUrl = "https://interm-api.onrender.com/api/catagory/create";
       var new_cat: any = await axios
         .post(apiUrl, { name: option.value })
         .then((res) => {
@@ -184,7 +184,7 @@ export default defineComponent({
       return option;
     },
     getAllTags() {
-      let apiUrl = "http://localhost:4040/api/tags/getall";
+      let apiUrl = "https://interm-api.onrender.com/api/tags/getall";
       axios
         .get(apiUrl, {
           headers: {
@@ -204,7 +204,7 @@ export default defineComponent({
         });
     },
    getAllCatagory() {
-       let apiUrl = "http://localhost:4040/api/catagory/getall";
+       let apiUrl = "https://interm-api.onrender.com/api/catagory/getall";
       axios
         .get(apiUrl)
         .then((res) => {

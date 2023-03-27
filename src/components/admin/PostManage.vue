@@ -62,7 +62,7 @@ import { IPost } from "@/interface/post";
 export default defineComponent({
   data() {
     const  onDelete = async (id : any) => {
-    axios.get("http://localhost:4040/api/post/getall",id).then((response) => {
+    axios.get("https://interm-api.onrender.com/api/post/getall",id).then((response) => {
       console.log(id);
      
     }).catch((err) =>{
@@ -75,7 +75,7 @@ export default defineComponent({
     };
   },
   mounted() {
-    axios.get("http://localhost:4040/api/post/getall").then((response) => {
+    axios.get("https://interm-api.onrender.com/api/post/getall").then((response) => {
       this.info = response.data;
     });
   },
