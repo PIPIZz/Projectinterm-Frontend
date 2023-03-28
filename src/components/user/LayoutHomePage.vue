@@ -110,7 +110,7 @@ export default {
     this.getAllCatagory();
     this.getallTags();
     this.getallPost();
-    this.profiles = JSON.parse(localStorage.getItem("profile") || "");
+    this.profile = JSON.parse(localStorage.getItem("profile") || "");
   },
   data: (): {
     catagories: any;
