@@ -23,9 +23,9 @@
               </div> 
           
               <button class="btn btn-dark col-11 pm-3" type="submit">Register</button>
-              <h4 class="p-3"><hr></h4>
-              
-              <router-link to="/" class="text-center link-dark">Back</router-link>
+              <div class=""><hr></div>
+              <button class="btn btn-danger col-11 text-white " @click.prevent="onclickGoogleRegister"><i class="bi-google"  ></i> Sign up with Google</button>
+              <router-link to="/" class="text-center link-dark mt-3">Back</router-link>
             </div>
           </div>
         </div>    
@@ -39,6 +39,7 @@ import router from '@/router';
 import axios from 'axios';
 import { defineComponent } from 'vue'
 import { IUser } from '@/interface/user';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 export default defineComponent({
   data :():{
     name : any;
@@ -80,6 +81,32 @@ export default defineComponent({
           router.push({path : '/register'}).then(() => { this.$router.go() })
         });
     },
-  },
+
+    async onclickGoogleRegister(){
+      const auth = getAuth();
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider)
+        .then(async(result) => {
+          const email = result.user.email;
+          const name = result.user.displayName;
+          const password = '1234';
+          const role = 'user';
+          let apiUrl = "https://interm-api.onrender.com/api/profile/create";
+            await axios
+              .post(apiUrl,{name,email,password,role})
+              .then((response) => {
+                console.log(response);
+                alert('Register Success')
+                router.push({ name: "login" });
+              })
+              .catch((error) => {
+                console.log(error.response.data);
+                alert(error.response.data.message);
+                router.push({path : '/register'}).then(() => { this.$router.go() })
+              });
+        })
+
+    },
+  }
 })
 </script>

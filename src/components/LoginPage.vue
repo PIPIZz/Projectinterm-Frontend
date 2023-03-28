@@ -47,6 +47,8 @@ import { ILogin } from "@/interface/user";
 import axios from "axios";
 import router from "@/router";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { next } from "cheerio/lib/api/traversing";
+import { data } from "cheerio/lib/api/attributes";
 
 export default defineComponent({
   methods: {
@@ -78,31 +80,31 @@ export default defineComponent({
         .then(async(result) => {
           const email = result.user.email;
           const provider_id = result.user.uid;
-
+          const name = result.user.displayName;
           let apiUrl = "https://interm-api.onrender.com/api/profile/loginwithgoogle";
-            await axios.post(apiUrl,{email,provider_id})
-              .then((response) => {
-              let profile = response.data.userInfo;
-              let accessToken = response.data.accessToken;
-
-              localStorage.setItem("profile", JSON.stringify(profile));
-              localStorage.setItem("access_token", accessToken);
-
-              router.push("/user/home");
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-          alert(error.response.data.message);
-          this.$store.commit("UPDATE_LOADING", false);
-        });   
+          await axios.post(apiUrl,{email,provider_id})
+          .then((response) => {
+            let profile = response.data.userInfo;
+            let accessToken = response.data.accessToken;
+            // console.log(response.data.userInfo);
+            localStorage.setItem("profile", JSON.stringify(profile));
+            localStorage.setItem("access_token", accessToken);
+            router.push("/user/home");
+          }).catch(async(error) => {
+            const errorCode = error.code;
+              const errorMessage = error.message;
+              console.log(errorCode);
+              console.log(errorMessage);
+          })
         }).catch((error) => {
           // Handle Errors here.
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorCode);
-          console.log(errorMessage);
+          console.log(errorMessage);      
         });
-    }
+    },
+
   },
   setup() {
     const states = reactive<ILogin>({
