@@ -74,7 +74,7 @@
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <i class="bi-person" style="font-size: 2rem;"></i>
+                  <i class="bi-person" style="font-size: 2rem;"></i> {{ profile.email }}
                 </a>
                 <ul class="dropdown-menu text-small" style="">
                   <li>
@@ -110,6 +110,7 @@ export default {
     this.getAllCatagory();
     this.getallTags();
     this.getallPost();
+    this.profiles = JSON.parse(localStorage.getItem("profile") || "");
   },
   data: (): {
     catagories: any;
@@ -118,6 +119,7 @@ export default {
     postList: any[];
     catagoryList: any[];
     toggle :boolean;
+    profile : any[]
   } => ({
     catagories: null,
     txt_search: "",
@@ -125,6 +127,7 @@ export default {
     postList: [],
     catagoryList: [],
     toggle : false,
+    profile : []
   }),
   computed: {
     filteredList() {
